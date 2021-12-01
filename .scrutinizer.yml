@@ -1,0 +1,13 @@
+checks:
+    python:
+        code_rating: true
+        duplicate_code: true
+filter:
+    excluded_paths:
+        - '*/disabled/*'
+build:
+    tests:
+        override:
+            -
+                command: 'tox'
+            - py-scrutinizer-run
