@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
 from pathlib import Path
 
-from setuptools import find_packages, setup
+from subprocess import CalledProcessError, call, check_call
+from setuptools import find_packages, Command, setup
 
 # Package meta-data.
 NAME = "pytest-tox-example"
@@ -16,14 +18,14 @@ REQUIRES_PYTHON = ">=3.6.0"
 about = {}
 about["__version__"] = "0.1.0"
 
-class TestCoverage(Test):
+class Coverage(Command):
     """Display test coverage."""
 
     description = 'run tests and display code coverage'
 
     def run(self):
         """Run tests quietly and display coverage report."""
-        cmd = 'coverage3 run setup.py pytest %s' % self.get_args()
+        cmd = 'coverage3 run pytest'
         cmd += '&& coverage3 report'
         try:
             check_call(cmd, shell=True)
@@ -33,7 +35,7 @@ class TestCoverage(Test):
             sys.exit(-1)
 
 
-class Linter(SimpleCommand):
+class Linter(Command):
     """Code linters."""
 
     description = 'lint Python source code'
@@ -65,7 +67,7 @@ setup(
     extras_require={},
     include_package_data=True,
     cmdclass={
-        'coverage': TestCoverage,
+        'coverage': Coverage,
         'lint': Linter,
     },
     license="BSD-3",
@@ -78,6 +80,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
