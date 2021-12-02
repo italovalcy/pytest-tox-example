@@ -16,6 +16,39 @@ REQUIRES_PYTHON = ">=3.6.0"
 about = {}
 about["__version__"] = "0.1.0"
 
+class TestCoverage(Test):
+    """Display test coverage."""
+
+    description = 'run tests and display code coverage'
+
+    def run(self):
+        """Run tests quietly and display coverage report."""
+        cmd = 'coverage3 run setup.py pytest %s' % self.get_args()
+        cmd += '&& coverage3 report'
+        try:
+            check_call(cmd, shell=True)
+        except CalledProcessError as exc:
+            print(exc)
+            print('Coverage tests failed. Fix the errors above and try again.')
+            sys.exit(-1)
+
+
+class Linter(SimpleCommand):
+    """Code linters."""
+
+    description = 'lint Python source code'
+
+    def run(self):
+        """Run Yala."""
+        print('Yala is running. It may take several seconds...')
+        try:
+            cmd = 'yala *.py tests'
+            check_call(cmd, shell=True)
+            print('No linter error found.')
+        except CalledProcessError:
+            print('Linter check failed. Fix the error(s) above and try again.')
+            sys.exit(-1)
+
 # Where the magic happens:
 setup(
     name=NAME,
@@ -31,6 +64,10 @@ setup(
     install_requires=["numpy"],
     extras_require={},
     include_package_data=True,
+    cmdclass={
+        'coverage': TestCoverage,
+        'lint': Linter,
+    },
     license="BSD-3",
     classifiers=[
         # Trove classifiers

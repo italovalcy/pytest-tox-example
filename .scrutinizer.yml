@@ -2,12 +2,35 @@ checks:
     python:
         code_rating: true
         duplicate_code: true
-filter:
-    excluded_paths:
-        - '*/disabled/*'
 build:
-    tests:
-        override:
-            -
-                command: 'tox'
-            - py-scrutinizer-run
+    nodes:
+        py37:
+            environment:
+                python: 3.7.1
+                postgresql: false
+                redis: false
+            tests:
+                override:
+                    -
+                        command: 'tox -a | grep -q py37 && tox -e py37'
+                        idle_timeout: 300
+                        coverage:
+                            file: '.coverage'
+                            config_file: '.coveragerc'
+                            format: 'py-cc'
+                    - py-scrutinizer-run
+        pyOthers:
+            environment:
+                python: 3.6
+                postgresql: false
+                redis: false
+            tests:
+                override:
+                    -
+                        command: 'for env in $(tox -a | grep -v py37); do tox -e $env; done'
+                        idle_timeout: 300
+                        coverage:
+                            file: '.coverage'
+                            config_file: '.coveragerc'
+                            format: 'py-cc'
+                    - py-scrutinizer-run
