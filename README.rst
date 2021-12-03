@@ -3,7 +3,7 @@ Example of setuptools + pytest + tox + scrutinizer-ci
 
 |Build| |Coverage| |Quality|
 
-Simple python app to test tox/pytest/setuptools/etc based on [ChristopherGS's Python tox tutorial](https://christophergs.com/python/2020/04/12/python-tox-why-use-it-and-tutorial/) and [Kytos-ng project](https://github.com/kytos-ng)
+Simple python app to test tox/pytest/setuptools/etc based on `ChristopherGS's Python tox tutorial <https://christophergs.com/python/2020/04/12/python-tox-why-use-it-and-tutorial/>` and `Kytos-ng project <https://github.com/kytos-ng>`
 
 .. TAGs
 
