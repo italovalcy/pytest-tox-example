@@ -9,6 +9,9 @@ build:
                 python: 3.7.1
                 postgresql: false
                 redis: false
+            dependencies:
+                before:
+                    - pip install coverage
             tests:
                 override:
                     -
@@ -24,6 +27,9 @@ build:
                 python: 3.6
                 postgresql: false
                 redis: false
+            dependencies:
+                before:
+                    - pip install coverage
             tests:
                 override:
                     -
