@@ -40,3 +40,21 @@ build:
                             config_file: '.coveragerc'
                             format: 'py-cc'
                     - py-scrutinizer-run
+        py39:
+            environment:
+                python: 3.9.12
+                postgresql: false
+                redis: false
+            dependencies:
+                before:
+                    - pip install coverage
+            tests:
+                override:
+                    -
+                        command: 'tox -e py39'
+                        idle_timeout: 300
+                        coverage:
+                            file: '.coverage'
+                            config_file: '.coveragerc'
+                            format: 'py-cc'
+                    - py-scrutinizer-run
